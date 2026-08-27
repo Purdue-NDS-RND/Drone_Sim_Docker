@@ -1,0 +1,51 @@
+name: ardupilot-gz
+
+services:
+  simulator:
+    image: ${SIM_IMAGE:-ardupilot-gz:4.6.3}
+    container_name: ardupilot-gz-sim
+    build:
+      context: .
+      args:
+        ARDUPILOT_VERSION: ${ARDUPILOT_VERSION:-Copter-4.6.3}
+        ARDUPILOT_COMMIT: ${ARDUPILOT_COMMIT:-92b0cd788ec29406f26c6f9c31d5ceedbd1cc538}
+        ARDUPILOT_GAZEBO_COMMIT: ${ARDUPILOT_GAZEBO_COMMIT:-082a0fe231f6e63bc8d1598f1cba461d9e2ea7f5}
+    network_mode: host
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    group_add:
+      - "${VIDEO_GID:-44}"
+      - "${RENDER_GID:-109}"
+    environment:
+      DISPLAY: ${DISPLAY}
+      XAUTHORITY: /tmp/ardupilot-gazebo.xauth
+      WORLD: ${WORLD:-iris_runway.sdf}
+      MAVLINK_QGC: ${MAVLINK_QGC:-udp:127.0.0.1:14550}
+      MAVLINK_API: ${MAVLINK_API:-udp:127.0.0.1:14551}
+      SOFTWARE_RENDERING: ${SOFTWARE_RENDERING:-0}
+      LIBGL_ALWAYS_SOFTWARE: ${LIBGL_ALWAYS_SOFTWARE:-0}
+      WIPE_PARAMS: ${WIPE_PARAMS:-0}
+      GAZEBO_STARTUP_TIMEOUT: ${GAZEBO_STARTUP_TIMEOUT:-90}
+      QT_X11_NO_MITSHM: "1"
+      GZ_PARTITION: ardupilot_gazebo_starter
+    volumes:
+      - type: bind
+        source: ${XAUTH_FILE:-/tmp/ardupilot-gazebo-missing.xauth}
+        target: /tmp/ardupilot-gazebo.xauth
+        read_only: true
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        read_only: true
+      - type: bind
+        source: ./logs
+        target: /sim
+    stdin_open: true
+    tty: true
+    stop_grace_period: 15s
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f '[g]z sim' >/dev/null && pgrep -f '[a]rducopter' >/dev/null && pgrep -f '[m]avproxy.py' >/dev/null"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 30s
+    restart: "no"
