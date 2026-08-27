@@ -6,7 +6,7 @@ This guide is for an x86-64 Ubuntu 22.04 or 24.04 desktop. Allow roughly 20 GB o
 
 ```bash
 sudo apt update
-sudo apt install -y ca-certificates curl xauth
+sudo apt install -y ca-certificates curl make xauth
 ```
 
 ## 2. Install Docker Engine and Compose
@@ -58,10 +58,10 @@ QGC 5.1 AppImages require Ubuntu 24.04 or newer. Do not replace Ubuntu 22.04's s
 Open this project in a terminal, start QGroundControl, and run:
 
 ```bash
-./run.sh
+make run
 ```
 
-The first run downloads and compiles the image. Future starts reuse it. If the command reports a display, Docker, or graphics error, go to [Troubleshooting](TROUBLESHOOTING.md).
+The first run downloads and compiles the image. Future starts reuse it. Stop the simulator with `Ctrl+C`. If the command reports a display, Docker, or graphics error, go to [Troubleshooting](TROUBLESHOOTING.md).
 
 ## Optional serial-device access
 

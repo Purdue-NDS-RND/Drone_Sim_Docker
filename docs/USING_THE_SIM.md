@@ -5,7 +5,7 @@
 Start QGroundControl normally on the host, open a terminal in the project, and run:
 
 ```bash
-./run.sh
+make run
 ```
 
 Wait for the Iris to appear in Gazebo and for QGC to report **Ready to Fly**. Stop everything with `Ctrl+C` in the same terminal. The shutdown handler stops Gazebo, ArduPilot SITL, MAVProxy, and the container.
@@ -23,7 +23,7 @@ If QGC rejects an action, open its vehicle-messages panel. ArduPilot normally ex
 
 ## Open an interactive MAVProxy console
 
-Leave `./run.sh` running and open a second terminal in the project:
+Leave `make run` running and open a second terminal in the project:
 
 ```bash
 docker compose exec simulator /opt/ardupilot-python/bin/mavproxy.py \

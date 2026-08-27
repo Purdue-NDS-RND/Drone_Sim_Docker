@@ -31,12 +31,12 @@ The Dockerfile checks that the release tag resolves to its expected immutable co
 
 ## Configuration
 
-Set variables immediately before `./run.sh`:
+Set variables immediately before `make run`; Make passes them through to the startup script:
 
 ```bash
-SOFTWARE_RENDERING=1 ./run.sh
-WIPE_PARAMS=1 ./run.sh
-WORLD=iris_runway.sdf MAVLINK_API=udp:127.0.0.1:14600 ./run.sh
+SOFTWARE_RENDERING=1 make run
+WIPE_PARAMS=1 make run
+WORLD=iris_runway.sdf MAVLINK_API=udp:127.0.0.1:14600 make run
 ```
 
 | Variable | Default | Meaning |
@@ -81,10 +81,10 @@ ARDUPILOT_VERSION=Copter-X.Y.Z \
 ARDUPILOT_COMMIT=<40-character-commit> \
 ARDUPILOT_GAZEBO_COMMIT=<40-character-commit> \
 SIM_IMAGE=ardupilot-gz:X.Y.Z-custom \
-./run.sh --build
+make build
 ```
 
-After changing ArduPilot versions, use `WIPE_PARAMS=1` for the first start so saved parameters from a different firmware do not leak into the new test.
+Then start that image with `SIM_IMAGE=ardupilot-gz:X.Y.Z-custom WIPE_PARAMS=1 make run`. The one-time parameter wipe prevents saved settings from a different firmware from leaking into the new test.
 
 ## Upstream references
 

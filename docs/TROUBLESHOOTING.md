@@ -5,14 +5,14 @@
 Stop this project's container and start it again:
 
 ```bash
-./run.sh --down
-./run.sh
+make down
+make run
 ```
 
 To reset ArduPilot's saved parameters once:
 
 ```bash
-WIPE_PARAMS=1 ./run.sh
+WIPE_PARAMS=1 make run
 ```
 
 ## Docker permission denied
@@ -58,7 +58,7 @@ Logging out and back in usually repairs a stale display environment.
 Try software rendering:
 
 ```bash
-SOFTWARE_RENDERING=1 ./run.sh
+SOFTWARE_RENDERING=1 make run
 ```
 
 Hardware acceleration normally uses `/dev/dri` and your `video` and `render` groups. NVIDIA Container Toolkit configuration is optional; Intel/AMD Mesa or software rendering is the portable default.
@@ -78,8 +78,9 @@ ss -lunp | grep 14550
 The default Copter 4.6.3 image includes this parameter. The warning usually means an old Copter 4.7 container is still running. Stop old containers, rebuild, and reset parameters once:
 
 ```bash
-./run.sh --down
-WIPE_PARAMS=1 ./run.sh --build
+make down
+make rebuild
+WIPE_PARAMS=1 make run
 ```
 
 Do not invent the missing parameter or disable safety checks.
@@ -94,7 +95,7 @@ docker compose ps
 docker compose logs simulator
 ```
 
-The logs should show Gazebo starting `iris_runway.sdf`, the ArduPilot plugin loading, and SITL receiving data from its JSON backend. Stop any stale copy with `./run.sh --down`.
+The logs should show Gazebo starting `iris_runway.sdf`, the ArduPilot plugin loading, and SITL receiving data from its JSON backend. Stop any stale copy with `make down`.
 
 ## Get more help
 

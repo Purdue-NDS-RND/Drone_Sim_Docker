@@ -3,7 +3,7 @@
 Launch a complete virtual quadcopter with one command:
 
 ```bash
-./run.sh
+make run
 ```
 
 This project is meant for students who want to learn drone programming without first becoming Linux, Docker, or flight-controller experts. You do not need a physical drone. Gazebo displays and simulates an Iris quadcopter, ArduPilot flies it, and QGroundControl gives you the same kind of ground-station interface used with real vehicles.
@@ -57,12 +57,23 @@ Gazebo Harmonic remains a modern, supported LTS release. The firmware choice doe
 4. Run:
 
 ```bash
-./run.sh
+make run
 ```
 
 The first build can take several minutes and use significant disk space. Later starts reuse the image named `ardupilot-gz:4.6.3`. The running container is named `ardupilot-gz-sim`.
 
-Wait for Gazebo to show the Iris and for QGroundControl to say **Ready to Fly**. Stop the simulation with `Ctrl+C` in the terminal that ran `./run.sh`.
+Wait for Gazebo to show the Iris and for QGroundControl to say **Ready to Fly**. Stop the simulation with `Ctrl+C` in the terminal that ran `make run`.
+
+The Makefile provides the main commands students need:
+
+```bash
+make run       # Start the simulator
+make down      # Stop and remove its container
+make build     # Build the image without starting Gazebo
+make validate  # Check the scripts and Docker Compose configuration
+```
+
+The Makefile calls `run.sh` for you. Most students can use the `make` commands and do not need to run that script directly.
 
 ## Where to go next
 
@@ -78,10 +89,10 @@ Drone_Sim_Docker/
 ├── Dockerfile              # Builds the pinned simulator environment
 ├── compose.yaml            # Describes the simulator container
 ├── compose.gpu.yaml        # Shares the host GPU when available
-├── run.sh                  # Student-facing start command
+├── run.sh                  # Lower-level startup and host-check script
 ├── start-sim.sh            # Starts and stops Gazebo, SITL, and MAVProxy
 ├── sitl-process-wrapper.sh # Captures SITL output and signals cleanly
-├── Makefile                # Shortcuts such as make run and make validate
+├── Makefile                # Student-facing commands such as make run
 ├── docs/                   # Setup, usage, troubleshooting, and design guides
 └── logs/                   # Local runtime and flight logs
 ```
