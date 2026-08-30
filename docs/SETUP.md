@@ -46,6 +46,7 @@ On Ubuntu 22.04, use the x86-64 AppImage from the [official QGroundControl 5.0.8
 
 ```bash
 mkdir -p "$HOME/Applications"
+cd ~/Downloads
 mv QGroundControl*.AppImage "$HOME/Applications/QGroundControl.AppImage"
 chmod +x "$HOME/Applications/QGroundControl.AppImage"
 "$HOME/Applications/QGroundControl.AppImage"
@@ -55,9 +56,21 @@ QGC 5.1 AppImages require Ubuntu 24.04 or newer. Do not replace Ubuntu 22.04's s
 
 ## 4. Start the project
 
-Open this project in a terminal, start QGroundControl, and run:
+Clone this project to your home directory:
+```bash
+cd ~
+git clone https://github.com/Purdue-NDS-RND/Drone_Sim_Docker.git
+```
+
+Start QGroundControl in a new terminal:
+```bash
+"$HOME/Applications/QGroundControl.AppImage"
+```
+
+Navigate to wherever you cloned this project and run:
 
 ```bash
+cd ~/Drone_Sim_Docker
 make run
 ```
 
