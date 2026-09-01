@@ -46,22 +46,35 @@ On Ubuntu 22.04, use the x86-64 AppImage from the [official QGroundControl 5.0.8
 
 ```bash
 mkdir -p "$HOME/Applications"
-mv QGroundControl*.AppImage "$HOME/Applications/QGroundControl.AppImage"
-chmod +x "$HOME/Applications/QGroundControl.AppImage"
-"$HOME/Applications/QGroundControl.AppImage"
+cd ~/Applications
+curl -L -o QGroundControl-x86_64.AppImage https://github.com/mavlink/qgroundcontrol/releases/download/v5.0.8/QGroundControl-x86_64.AppImage
+chmod +x QGroundControl-x86_64.AppImage
+./QGroundControl.AppImage
 ```
 
 QGC 5.1 AppImages require Ubuntu 24.04 or newer. Do not replace Ubuntu 22.04's system `glibc` to force one to launch. This project uses Copter 4.6.3 so QGC 5.0.8 is a compatible and straightforward Ubuntu 22.04 choice.
 
 ## 4. Start the project
 
-Open this project in a terminal, start QGroundControl, and run:
+Clone this project to your home directory:
+```bash
+cd ~
+git clone https://github.com/Purdue-NDS-RND/Drone_Sim_Docker.git
+```
+
+Start QGroundControl in a new terminal:
+```bash
+"$HOME/Applications/QGroundControl.AppImage"
+```
+
+Navigate to wherever you cloned this project and run:
 
 ```bash
+cd ~/Drone_Sim_Docker
 make run
 ```
 
-The first run downloads and compiles the image. Future starts reuse it. Stop the simulator with `Ctrl+C`. If the command reports a display, Docker, or graphics error, go to [Troubleshooting](TROUBLESHOOTING.md).
+The first run downloads and compiles the image. When launching the drone sim docker in the future, do `make run`; future starts reuse the build. Stop the simulator with `Ctrl+C`. If the command reports a display, Docker, or graphics error, go to [Troubleshooting](TROUBLESHOOTING.md).
 
 ## Optional serial-device access
 
